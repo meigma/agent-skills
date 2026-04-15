@@ -18,6 +18,7 @@ scope).
 | [cobra-viper-cli](cobra-viper-cli/) | Build production-ready Go CLIs with Cobra and Viper. |
 | [diataxis](diataxis/) | Organize documentation into tutorials, how-to guides, reference, and explanation. |
 | [docusaurus](docusaurus/) | Configure and extend Docusaurus documentation sites. |
+| [gh-cli](gh-cli/) | Work with GitHub via the `gh` CLI for PRs, Actions, issues, repo settings, and API calls. |
 | [github-actions](github-actions/) | Write and harden GitHub Actions workflows for CI/CD. |
 | [go-benchmarking](go-benchmarking/) | Write and analyze Go benchmarks with `b.Loop` and benchstat. |
 | [go-testscript](go-testscript/) | Test Go CLIs with `rsc.io/script`-style testscript and txtar files. |
@@ -28,6 +29,7 @@ scope).
 | [release-please](release-please/) | Automate releases with release-please and Conventional Commits. |
 | [repo-docs](repo-docs/) | Bootstrap README, SECURITY, and CONTRIBUTING for software repos. |
 | [testcontainers-go](testcontainers-go/) | Write Go integration tests backed by real containerized dependencies. |
+| [worktrunk](worktrunk/) | Manage isolated Git worktrees with Worktrunk and prefer `gh pr` over local merge flow. |
 
 ## Installation
 
