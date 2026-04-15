@@ -19,6 +19,7 @@ scope).
 | [diataxis](diataxis/) | Organize documentation into tutorials, how-to guides, reference, and explanation. |
 | [docusaurus](docusaurus/) | Configure and extend Docusaurus documentation sites. |
 | [gh-cli](gh-cli/) | Work with GitHub via the `gh` CLI for PRs, Actions, issues, repo settings, and API calls. |
+| [git](git/) | Standardize Git workflow around Conventional Commits, PR-title-based squash merges, and commit-often branch work. |
 | [github-actions](github-actions/) | Write and harden GitHub Actions workflows for CI/CD. |
 | [go-benchmarking](go-benchmarking/) | Write and analyze Go benchmarks with `b.Loop` and benchstat. |
 | [go-testscript](go-testscript/) | Test Go CLIs with `rsc.io/script`-style testscript and txtar files. |
