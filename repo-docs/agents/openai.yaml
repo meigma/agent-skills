@@ -1,0 +1,4 @@
+interface:
+  display_name: "Repo Docs"
+  short_description: "Create standard repo docs and community health files"
+  default_prompt: "Use $repo-docs to draft or review README.md, SECURITY.md, and CONTRIBUTING.md for this repository."
