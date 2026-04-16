@@ -13,6 +13,8 @@ scope).
 
 | Skill | Summary |
 | --- | --- |
+| [ansible-automation](ansible-automation/) | Build modern Ansible automation with current versions, idempotent playbooks, execution environments, and ansible-lint discipline. |
+| [argocd](argocd/) | Operate upstream Argo CD for platform teams with AppProjects, ApplicationSets, drift handling, sync controls, and scaling guidance. |
 | [charmbracelet](charmbracelet/) | Build Go CLIs with Lip Gloss, Huh, and Log (excluding Bubble Tea). |
 | [cli](cli/) | Design and audit command-line interfaces for scriptability and Unix ergonomics. |
 | [cobra-viper-cli](cobra-viper-cli/) | Build production-ready Go CLIs with Cobra and Viper. |
@@ -22,14 +24,21 @@ scope).
 | [git](git/) | Standardize Git workflow around Conventional Commits, PR-title-based squash merges, and commit-often branch work. |
 | [github-actions](github-actions/) | Write and harden GitHub Actions workflows for CI/CD. |
 | [go-benchmarking](go-benchmarking/) | Write and analyze Go benchmarks with `b.Loop` and benchstat. |
+| [go-style](go-style/) | Structure Go code around package boundaries, godoc, hexagonal seams, and opt-in observability. |
+| [go-testing](go-testing/) | Write Go tests around behavior using table tests, helpers, Testify, and mockery. |
 | [go-testscript](go-testscript/) | Test Go CLIs with `rsc.io/script`-style testscript and txtar files. |
 | [goreleaser](goreleaser/) | Release Go binaries with GoReleaser, Cosign, SBOMs, and Homebrew. |
 | [just-runner](just-runner/) | Write `justfile` recipes as a modern alternative to Make. |
+| [mikrotik](mikrotik/) | Work with remote MikroTik RouterOS devices over SSH, navigate the CLI, and troubleshoot with logs, routes, ARP, torch, and packet sniffer. |
 | [moonrepo](moonrepo/) | Configure monorepos with moon v2 — workspace, toolchains, and tasks. |
+| [publishing](publishing/) | Design hardened publishing flows with rehearsals, draft-release handoff, attestations, and user verification. |
+| [proxmox](proxmox/) | Design and operate Proxmox VE nodes and clusters with grounded guidance on networking, storage, clustering, access control, and Ansible automation. |
 | [readme-writer](readme-writer/) | Draft clear, professional READMEs without marketing fluff. |
 | [release-please](release-please/) | Automate releases with release-please and Conventional Commits. |
 | [repo-docs](repo-docs/) | Bootstrap README, SECURITY, and CONTRIBUTING for software repos. |
 | [testcontainers-go](testcontainers-go/) | Write Go integration tests backed by real containerized dependencies. |
+| [uv](uv/) | Manage Python projects and self-contained scripts with Astral's `uv`, including `uv init`, `uv add`, locking, syncing, and shebang-based script execution. |
+| [vyos](vyos/) | Work with remote VyOS routers over SSH, navigate the CLI, and troubleshoot interfaces, routes, ARP/NDP, logs, and live traffic. |
 | [worktrunk](worktrunk/) | Manage isolated Git worktrees with Worktrunk and prefer `gh pr` over local merge flow. |
 
 ## Installation
