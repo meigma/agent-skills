@@ -50,8 +50,9 @@ split is:
   run scanners before publication
 - `publish`: build and push real artifacts, resolve final digests, generate
   SBOMs, and upload release assets
-- `attest-*`: create GitHub or registry-backed attestations from stable
-  checksum and digest inputs
+- `attest-*`: create GitHub API-backed attestations from stable checksum and
+  digest inputs, and registry-backed attestations only when the artifact type
+  needs them
 
 Treat the reusable workflow as the trusted builder. If consumers later verify
 provenance, they should be verifying this workflow's identity.

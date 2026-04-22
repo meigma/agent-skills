@@ -150,7 +150,7 @@ jobs:
           persist-credentials: false
       - run: ./build.sh
       - name: Generate artifact attestation
-        uses: actions/attest-build-provenance@<full-commit-sha>  # v3
+        uses: actions/attest@<full-commit-sha>  # v4
         with:
           subject-path: dist/my-artifact.tar.gz
 ```

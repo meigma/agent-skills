@@ -223,7 +223,7 @@ permissions:
 
 ```yaml
 - name: Generate artifact attestation
-  uses: actions/attest-build-provenance@<full-commit-sha>  # v3
+  uses: actions/attest@<full-commit-sha>  # v4
   with:
     subject-path: dist/my-artifact.tar.gz
 ```
@@ -239,7 +239,7 @@ permissions:
 
 ```yaml
 - name: Generate SBOM attestation
-  uses: actions/attest-sbom@<full-commit-sha>  # v2
+  uses: actions/attest@<full-commit-sha>  # v4
   with:
     subject-path: dist/my-artifact.tar.gz
     sbom-path: sbom.spdx.json
@@ -247,7 +247,9 @@ permissions:
 
 ### Linked artifacts metadata
 
-Add `artifact-metadata: write` only when the attestation flow needs linked-artifact storage metadata, such as registry-pushed image provenance with linked artifact records.
+Add `artifact-metadata: write` only when the attestation flow needs
+linked-artifact storage metadata, such as registry-pushed image provenance with
+linked artifact records.
 
 ### Verification
 
@@ -265,7 +267,9 @@ gh attestation verify dist/my-artifact.tar.gz \
 
 For published artifacts:
 - use immutable releases where available
-- attach release attestations or provenance to release assets
+- let GitHub-native attestation actions publish provenance through GitHub's
+  attestation service; do not attach raw provenance bundles as release assets
+  unless offline verification requires them
 - document how consumers can verify what was built and published
 
 ## Runner Hardening

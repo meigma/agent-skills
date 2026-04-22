@@ -3,56 +3,65 @@
 The release is not finished until a downstream user has what they need to verify
 it.
 
-That means publishing the verification materials, not just generating them in
-CI.
+That means publishing verification data through the right channel, not just
+generating it in CI. For GitHub-native attestations, the right channel is
+GitHub's attestations API, or the OCI registry when registry-backed bundles are
+needed. Do not attach raw provenance bundles to the release by default.
 
 ## What should ship with a release
 
 At minimum, publish:
 
 - the release artifacts themselves
-- `checksums.txt`
-- a Cosign bundle or equivalent signature material for `checksums.txt`
-- SBOMs for shipped artifacts
+- `checksums.txt`, when the release tool emits one
+- SBOMs for shipped artifacts, or SBOM attestations when that is the consumer
+  contract
 - a digest map for published OCI artifacts such as `digests.txt`
-- GitHub or registry-backed attestations tied to the final artifacts
+- GitHub API-backed attestations tied to the final artifacts
 - exact verification commands in the release notes, docs, or both
 
 If the user has to reverse engineer your workflow to figure out what to verify,
 the publishing design is incomplete.
 
-## Checksums and signature bundle
+Only ship raw Sigstore bundles, custom trusted roots, or detached signature
+material as release assets when the project explicitly supports offline or
+air-gapped verification.
 
-For GitHub Actions keyless signing, prefer an exact workflow identity rather
-than a loose repository-wide regex.
+## GitHub release integrity
 
-Example:
+For immutable GitHub releases, teach consumers to verify the release and the
+local asset directly:
 
 ```bash
-cosign verify-blob \
-  --bundle checksums.txt.sigstore.json \
-  --certificate-identity "https://github.com/OWNER/REPO/.github/workflows/release.yml@refs/tags/v1.2.3" \
-  --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
-  checksums.txt
-
-sha256sum -c checksums.txt --ignore-missing
+gh release verify v1.2.3 -R OWNER/REPO
+gh release verify-asset v1.2.3 ./myapp_1.2.3_linux_amd64.tar.gz -R OWNER/REPO
 ```
 
-This verifies two different things:
+This verifies that GitHub has a valid release attestation and that the local
+asset digest matches the released asset. It is separate from build provenance.
 
-- the checksum manifest was signed by the expected workflow identity
-- the downloaded artifacts match the published checksums
+## GitHub build provenance for release files
 
-## GitHub artifact attestation for a released file
-
-For a file published as a release asset:
+For a file published as a release asset, verify the GitHub API-backed
+attestation directly. Do not require users to download a provenance bundle from
+the release assets list.
 
 ```bash
-gh attestation verify myapp_1.2.3_linux_amd64.tar.gz \
+gh attestation verify ./myapp_1.2.3_linux_amd64.tar.gz \
   --repo OWNER/REPO \
   --signer-workflow OWNER/REPO/.github/workflows/reusable-release.yml \
   --source-ref refs/tags/v1.2.3 \
   --deny-self-hosted-runners
+```
+
+If the release process has many file artifacts and emits a checksum manifest,
+generate the attestation with `actions/attest` and `subject-checksums`:
+
+```yaml
+- name: Attest release artifacts
+  uses: actions/attest@<full-commit-sha> # v4
+  with:
+    subject-checksums: dist/checksums.txt
 ```
 
 If the attestation was produced by a reusable workflow, the reusable workflow is
@@ -67,12 +76,13 @@ gh attestation verify oci://ghcr.io/OWNER/IMAGE@sha256:<digest> \
   --repo OWNER/REPO \
   --signer-workflow OWNER/REPO/.github/workflows/reusable-release.yml \
   --source-ref refs/tags/v1.2.3 \
-  --bundle-from-oci \
   --deny-self-hosted-runners
 ```
 
-The same pattern applies to other OCI artifacts, including charts, as long as
-you verify the final digest and fetch the attestation bundle from the registry.
+By default, `gh` fetches the attestation from GitHub. Add
+`--bundle-from-oci` only when the release workflow intentionally pushed the
+attestation bundle to the registry with `push-to-registry: true` and the
+consumer should verify against that registry copy.
 
 ## Reusable workflow nuance
 

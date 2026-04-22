@@ -18,7 +18,7 @@ any project that can:
 - compute a version
 - publish immutable artifacts
 - resolve final digests
-- attach provenance and verification material
+- publish provenance records that consumers can verify later
 
 ## Default stance
 
@@ -31,8 +31,9 @@ any project that can:
    short-lived credentials, and digest-based attestations.
 5. Keep security checks continuous in CI and scheduled rescans, not just in the
    tagged release job.
-6. Give downstream users exact verification commands and the materials those
-   commands require.
+6. Give downstream users exact verification commands. Do not attach raw
+   attestation bundles as release assets unless offline verification requires
+   them.
 
 ## Read these files as needed
 
@@ -42,8 +43,8 @@ any project that can:
 - [references/rehearsal.md](references/rehearsal.md) for the mandatory rehearsal pattern
 - [references/security.md](references/security.md) for SLSA-oriented hardening, continuous adherence,
   and consumer enforcement
-- [references/verification.md](references/verification.md) for what must ship with a release and how
-  users verify it
+- [references/verification.md](references/verification.md) for what must ship with a release,
+  what should live in GitHub's attestation service, and how users verify it
 - [references/troubleshooting.md](references/troubleshooting.md) for the failure modes that show up
   after merge if the design is too optimistic
 
@@ -66,6 +67,16 @@ tool itself.
 - Pass checksums, digests, and attestation metadata across jobs as files or
   uploaded artifacts. Do not depend on parsing job logs later.
 - Attest and verify digests, not tags.
+- For GitHub-native provenance, prefer `actions/attest` pinned to a full commit
+  SHA. GitHub's `actions/attest-build-provenance` v4 path is a compatibility
+  wrapper; new workflows should use `actions/attest` directly.
+- Let GitHub-native attestation actions upload provenance to GitHub's
+  attestations API. Do not upload the generated Sigstore bundles as release
+  assets by default.
+- For many release files, use a checksum file as the `subject-checksums` input.
+  For OCI artifacts, use the final `subject-name` and `subject-digest`; set
+  `push-to-registry: true` only when you also want registry-backed attestations
+  or linked-artifact storage records.
 - Rehearsals should stay faithful to the real publish path. Prefer a synthetic
   version and a safe draft/publication toggle over a fake dry run that skips the
   interesting failure modes.

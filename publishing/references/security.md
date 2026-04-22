@@ -25,8 +25,8 @@ Typical publish job permissions:
 - `contents: write` for draft release asset uploads or release mutation
 - `packages: write` for OCI pushes
 - `id-token: write` for keyless signing and attestations
-- `attestations: write` and `artifact-metadata: write` for GitHub-native
-  attestation flows
+- `attestations: write` for GitHub-native attestation persistence
+- `artifact-metadata: write` when creating linked-artifact storage records
 
 ## Pre-publish local scanning
 
@@ -70,8 +70,14 @@ state in each job.
 
 For GitHub-native attestations:
 
-- attest released files from `checksums.txt`
+- use `actions/attest` directly for new workflows, pinned to a full commit SHA
+- attest released files with `subject-path` or `subject-checksums`
 - attest OCI artifacts by resolved digest, not by tag
+- let the action persist provenance to GitHub's attestations API; do not attach
+  the generated Sigstore bundle as a release asset by default
+- for OCI subjects, use a tagless fully qualified `subject-name` and the final
+  `subject-digest`; set `push-to-registry: true` when the attestation should
+  also be pushed to the registry or create linked-artifact records
 - if the registry-backed attestation step runs in a separate job, log back into
   the registry there too
 
