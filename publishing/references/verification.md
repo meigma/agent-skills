@@ -4,28 +4,30 @@ The release is not finished until a downstream user has what they need to verify
 it.
 
 That means publishing verification data through the right channel, not just
-generating it in CI. For GitHub-native attestations, the right channel is
-GitHub's attestations API, or the OCI registry when registry-backed bundles are
-needed. Do not attach raw provenance bundles to the release by default.
+generating it in CI. For GitHub-native attestations, the default channel is
+GitHub's attestations API. Do not attach raw provenance bundles, detached
+signature material, checksum manifests, or SBOM files to the release by default.
 
-## What should ship with a release
+## Default online path
 
-At minimum, publish:
+For normal GitHub releases, publish only:
 
 - the release artifacts themselves
-- `checksums.txt`, when the release tool emits one
-- SBOMs for shipped artifacts, or SBOM attestations when that is the consumer
-  contract
-- a digest map for published OCI artifacts such as `digests.txt`
-- GitHub API-backed attestations tied to the final artifacts
 - exact verification commands in the release notes, docs, or both
+
+Persist build provenance and SBOM attestations to GitHub's attestation service.
+Use `checksums.txt`, `digests.txt`, and generated SBOM files as workflow inputs
+when they help create attestations, but keep them out of the release asset list
+unless consumers have explicitly asked for those files.
 
 If the user has to reverse engineer your workflow to figure out what to verify,
 the publishing design is incomplete.
 
 Only ship raw Sigstore bundles, custom trusted roots, or detached signature
 material as release assets when the project explicitly supports offline or
-air-gapped verification.
+air-gapped verification. The same rule applies to checksum manifests and SBOM
+files: attach them only when they are part of a stated consumer contract, not as
+a generic security default.
 
 ## GitHub release integrity
 
@@ -79,10 +81,10 @@ gh attestation verify oci://ghcr.io/OWNER/IMAGE@sha256:<digest> \
   --deny-self-hosted-runners
 ```
 
-By default, `gh` fetches the attestation from GitHub. Add
-`--bundle-from-oci` only when the release workflow intentionally pushed the
-attestation bundle to the registry with `push-to-registry: true` and the
-consumer should verify against that registry copy.
+By default, `gh` fetches the attestation from GitHub. Add `--bundle-from-oci`
+only when the release workflow intentionally pushed the attestation bundle to
+the registry with `push-to-registry: true` and the consumer should verify
+against that registry copy.
 
 ## Reusable workflow nuance
 

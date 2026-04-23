@@ -48,8 +48,8 @@ split is:
 
 - `scan-local`: build from the checked-out source, resolve local artifacts, and
   run scanners before publication
-- `publish`: build and push real artifacts, resolve final digests, generate
-  SBOMs, and upload release assets
+- `publish`: build and push real artifacts, resolve final digests, generate any
+  SBOMs needed for attestation, and upload only the distributable release assets
 - `attest-*`: create GitHub API-backed attestations from stable checksum and
   digest inputs, and registry-backed attestations only when the artifact type
   needs them
@@ -76,7 +76,9 @@ rehearsal runs is usually how you end up with half-published state.
 
 ## Minimal contract between jobs
 
-The publish and attestation jobs need stable files, not inferred state.
+The publish and attestation jobs need stable workflow files, not inferred state.
+These are handoff files for the pipeline; do not attach them to the GitHub
+release unless the project has an explicit offline verification requirement.
 
 Good contract files:
 

@@ -64,8 +64,10 @@ tool itself.
   the workflow level, and only grant the scopes each job actually needs.
 - Keep `persist-credentials: false` on checkouts unless a step truly needs git
   write-back.
-- Pass checksums, digests, and attestation metadata across jobs as files or
-  uploaded artifacts. Do not depend on parsing job logs later.
+- Pass checksums, digests, SBOMs, and attestation metadata across jobs as
+  workflow artifacts or files. Do not make them release assets unless the
+  project explicitly supports offline verification. Do not depend on parsing job
+  logs later.
 - Attest and verify digests, not tags.
 - For GitHub-native provenance, prefer `actions/attest` pinned to a full commit
   SHA. GitHub's `actions/attest-build-provenance` v4 path is a compatibility

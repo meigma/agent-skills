@@ -63,10 +63,12 @@ Use stable files as the bridge between publish and attest jobs:
 
 - `checksums.txt` for released files
 - `digests.txt` for OCI artifacts
+- generated SBOM files when creating SBOM attestations
 - an env or JSON file for final artifact names and digests
 
 Then create attestations from those stable inputs rather than reconstructing
-state in each job.
+state in each job. These files are pipeline handoff data, not default release
+assets.
 
 For GitHub-native attestations:
 
