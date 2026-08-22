@@ -1,0 +1,4 @@
+interface:
+  display_name: "CUE"
+  short_description: "Author CUE modules and constraints"
+  default_prompt: "Use $cue to design a CUE module, schema constraints, and export workflow."
